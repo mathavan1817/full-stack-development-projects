@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Task Management Website</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#task-list">Tasks</a></li>
+        <li><a href="#task-detail">Add task</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="task-list">
+      <h2>Task List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Task Name</th>
+            <th>Due Date</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>{{ task.tname }}</td>
+            <td>{{ task.due }}</td>
+            <td>{{ task.assign }}</td>
+            <td>{{ task.status }}</td>
+            <td>
+              <a href="{{ url_for('edit', id=task.id) }}"><button class="edit-btn">Edit</button></a>
+              <a href="{{ url_for('delete', id=task.id) }}"><button class="delete-btn">Delete</button></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button class="add-task-btn"><a href="#task-detail" style="text-decoration: none; color: #fff;">Add task</a></button>
+    </section>
+   
+    <section id="task-detail">
+      <h2>Task Detail</h2>
+      <form action="/register" method="POST">
+        <label for="task-name">Task Name:</label>
+        <input type="text" id="task-name" name="task-name">
+        <label for="due-date">Due Date:</label>
+        <input type="date" id="due-date" name="due-date">
+        <label for="assigned-to">Assigned To:</label>
+        <input type="text" name="assign">
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+        <input type="submit">
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>Copyright © 2023 Task Management Website</p>
+  </footer>
+
+</body>
+
+</html>
